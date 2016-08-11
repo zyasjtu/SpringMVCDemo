@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Home</title>
+    <script src="../include/jquery-3.0.0/jquery-3.0.0.min.js"></script>
+</head>
+<body>
+    Home page is Ok.
+<button onclick="logout()">logout</button>
+</body>
+<script>
+    function logout() {
+        $.post("logout.json",
+                {
+                },
+                function () {
+                    window.location.href = "../index.jsp";
+                }
+        );
+    }
+</script>
+</html>

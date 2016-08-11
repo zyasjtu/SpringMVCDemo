@@ -1,0 +1,59 @@
+<html>
+<head>
+    <title>Login</title>
+    <script src="../include/jquery-3.0.0/jquery-3.0.0.min.js"></script>
+    <link href="../include/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../include/signin.css" rel="stylesheet">
+</head>
+
+<body>
+<!--<input id="inputAccount" type="text"><br>-->
+<!--<input id="inputPassword" type="text"><br>-->
+<!--<button onclick="loginCheck()">Login</button>-->
+<!--<button onclick="resetInput()">Reset</button>-->
+    <div class="container">
+        <div class="page-header"></div>
+        <form class="form-signin">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <label for="inputAccount" class="sr-only">Account</label>
+            <input type="text" id="inputAccount" class="form-control" placeholder="Account" required="" autofocus="">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="button" onclick="loginCheck()">Sign in</button>
+            <!--<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>-->
+        </form>
+    </div>
+</body>
+
+<script>
+    function loginCheck() {
+        var inputAccount = $("#inputAccount").val();
+        var inputPassword = $("#inputPassword").val();
+
+        $.post("loginCheck.json",
+            {
+                inputAccount: inputAccount,
+                inputPassword: inputPassword
+            },
+            function (data) {
+                var obj = $.parseJSON(data);
+                if (obj.respCode === "1000") {
+                    window.location.href = "../index.jsp";
+                }
+                else {
+                    alert(obj.respMsg);
+                }
+            }
+        )
+    }
+    function resetInput() {
+        $("#inputAccount").val("");
+        $("#inputPassword").val("");
+    }
+</script>
+</html>

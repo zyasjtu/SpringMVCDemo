@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by z673413 on 2016/7/26.
+ * Created by z673413 on 2016/8/8.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -20,8 +22,8 @@ public class UserServiceTest {
 
     @Test
     public void findUserTest() {
-        User user = userService.findUser("admin", "a");
-        assertEquals("Colin", user.getName());
+        List<User> users = userService.findUser("admin", "a");
+        assertEquals("Colin", users.get(0).getName());
     }
 
     @Test
@@ -48,6 +50,9 @@ public class UserServiceTest {
 
     @Test
     public void deleteUserTest() {
-        userService.deleteUser("test");
+        User user = new User();
+        user.setId("test");
+        userService.deleteUser(user);
     }
+
 }

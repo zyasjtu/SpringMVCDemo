@@ -1,9 +1,6 @@
 <html>
-<head>
-    <title>Index</title>
-</head>
 <body>
-    Index page is Ok.
+<h2>Hello World!</h2>
 </body>
 <script>window.location.href = "page/home.html"</script>
 </html>

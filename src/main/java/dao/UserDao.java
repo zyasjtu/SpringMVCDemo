@@ -2,13 +2,10 @@ package dao;
 
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Created by z673413 on 2016/7/26.
@@ -16,45 +13,23 @@ import java.util.Date;
 @Repository
 public class UserDao {
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private HibernateTemplate hibernateTemplate;
 
-    public void addUser(String id, String name, String password,
-                        String email, String address, Date birthday,
-                        Integer type, Double discount) {
-        String sql = " INSERT INTO SpringMVCDemo_User (id,name,password,email,address,birthday,type,discount) "
-                   + " VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
-        jdbcTemplate.update(sql, new Object[]{id, name, password, email, address, birthday, type, discount});
+    public void addUser(User user) {
+        hibernateTemplate.save(user);
     }
 
-    public void deleteUser(String id) {
-        String sql = " DELETE FROM SpringMVCDemo_User WHERE id = ? ";
-        jdbcTemplate.update(sql, new Object[]{id});
+    public void deleteUser(User user) {
+        hibernateTemplate.delete(user);
     }
 
-    public void updateUser(String id, String name, String password,
-                           String email, String address, Date birthday,
-                           Integer type, Double discount) {
-        String sql = " UPDATE SpringMVCDemo_User SET name = ?, password = ?, email = ?, "
-                   + "address = ?, birthday = ?, type = ?, discount = ? WHERE id = ?";
-        jdbcTemplate.update(sql, new Object[]{name,password,email,address,birthday,type,discount,id});
+    public void updateUser(User user) {
+        hibernateTemplate.update(user);
     }
 
-    public User findUser(final String id, final String password) {
-        final User user = new User();
-        String sql = " SELECT * FROM SpringMVCDemo_User WHERE id = ? AND password = ? ";
-        jdbcTemplate.query(sql, new Object[]{id, password},
-                new RowCallbackHandler() {
-                    public void processRow(ResultSet rs) throws SQLException {
-                        user.setId(rs.getString("id"));
-                        user.setName(rs.getString("name"));
-                        user.setPassword(rs.getString("password"));
-                        user.setEmail(rs.getString("email"));
-                        user.setAddress(rs.getString("address"));
-                        user.setBirthday(rs.getDate("birthday"));
-                        user.setType(rs.getInt("type"));
-                        user.setDiscount(rs.getDouble("discount"));
-                    }
-                });
-        return user;
+    public List<User> findUser(final String id, final String password) {
+        final String hql = "FROM User WHERE id = ? AND password = ? ";
+        List<User> users = (List<User>) hibernateTemplate.find(hql, new Object[]{id, password});
+        return users;
     }
 }

@@ -3,12 +3,7 @@ package filter;
 
 import model.User;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,7 +29,7 @@ public class LoginFilter implements Filter {
         } else if (url.indexOf("login.html") > 0) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            resp.sendRedirect("http://localhost:8080/SpringMVCDemo/page/login.html");
+            resp.sendRedirect("http://localhost:8080/SSHDemo/page/login.html");
         }
     }
 

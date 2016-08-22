@@ -11,6 +11,7 @@ import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,16 +26,16 @@ public class LoginController {
     @ResponseBody
     public String loginCheck(@RequestParam String inputAccount, @RequestParam String inputPassword,
                              HttpServletRequest request, HttpServletRequest response) {
-        User user = userService.findUser(inputAccount, inputPassword);
+        List<User> users = userService.findUser(inputAccount, inputPassword);
         Map<String, Object> returnMap = new LinkedHashMap<String, Object>();
-        if (user.getId() == null) {
+        if (users.size() == 0) {
             returnMap.put("respCode", "1001");
             returnMap.put("respMsg", "loginFail");
             request.getSession().setAttribute("loginUser", null);
         } else {
             returnMap.put("respCode", "1000");
             returnMap.put("respMsg", "loginSuccess");
-            request.getSession().setAttribute("loginUser", user);
+            request.getSession().setAttribute("loginUser", users.get(0));
         }
 
         return JSON.toJSONString(returnMap);

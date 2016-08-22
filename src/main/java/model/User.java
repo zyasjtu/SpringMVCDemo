@@ -3,7 +3,7 @@ package model;
 import java.util.Date;
 
 /**
- * Created by z673413 on 2016/7/26.
+ * Created by z673413 on 2016/8/19.
  */
 public class User {
     private String id;

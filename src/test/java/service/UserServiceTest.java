@@ -7,47 +7,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertEquals;
+import java.util.List;
 
 /**
- * Created by z673413 on 2016/7/26.
+ * Created by z673413 on 2016/8/19.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+@ContextConfiguration(locations = "classpath:/applicationContext.xml")
 public class UserServiceTest {
     @Autowired
     private UserService userService;
 
     @Test
-    public void findUserTest() {
-        User user = userService.findUser("admin", "a");
-        assertEquals("Colin", user.getName());
+    public void addUserTest() throws Exception {
+
     }
 
     @Test
-    public void addUserTest() {
-        User user = new User();
-        user.setId("test");
-        user.setName("xxx");
-        user.setPassword("x");
-        user.setType(0);
-        user.setDiscount(1.0);
-        userService.addUser(user);
+    public void deleteUserTest() throws Exception {
+
     }
 
     @Test
-    public void updateUserTest() {
-        User user = new User();
-        user.setId("test");
-        user.setName("xxx");
-        user.setPassword("xxx");
-        user.setType(0);
-        user.setDiscount(1.0);
-        userService.updateUser(user);
+    public void updateUserTest() throws Exception {
+
     }
 
     @Test
-    public void deleteUserTest() {
-        userService.deleteUser("test");
+    public void findUserTest() throws Exception {
+        List<User> users = userService.findUser("admin", "a");
     }
+
 }

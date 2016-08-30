@@ -2,6 +2,7 @@ package controller;
 
 import com.alibaba.fastjson.JSON;
 import model.User;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +20,14 @@ import java.util.Map;
  */
 @Controller
 public class LoginController {
+    private static Logger logger = Logger.getLogger(LoginController.class);
     @Autowired
     private UserService userService;
 
     @RequestMapping("/page/loginCheck.json")
     @ResponseBody
     public String loginCheck(@RequestParam String inputAccount, @RequestParam String inputPassword,
-                             HttpServletRequest request, HttpServletRequest response) {
+                             HttpServletRequest request) {
         List<User> users = userService.findUser(inputAccount, inputPassword);
         Map<String, Object> returnMap = new LinkedHashMap<String, Object>();
         if (users.size() == 0) {
@@ -43,7 +45,8 @@ public class LoginController {
 
     @RequestMapping("/page/logout.json")
     @ResponseBody
-    public void logout(HttpServletRequest request, HttpServletRequest response) {
+    public void logout(HttpServletRequest request) {
         request.getSession().setAttribute("loginUser", null);
+        logger.info("logout!");
     }
 }

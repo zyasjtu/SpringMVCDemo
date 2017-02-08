@@ -5,6 +5,7 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:c="http://www.springframework.org/schema/c"
        xmlns="http://www.springframework.org/schema/beans"
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -20,14 +21,15 @@
     <!-- 扫描类包，将标注Spring注解的类自动转化Bean，同时完成Bean的注入 -->
     <context:component-scan base-package="dao"/>
     <context:component-scan base-package="service"/>
+    <context:property-placeholder location="classpath:spring-config.properties"/>
 
     <!-- 配置数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close"
-          p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="jdbc:mysql://localhost:3306/SpringMVCDemo_DB?serverTimezone=UTC"
-          p:username="root"
-          p:password="zhaoyunan_199136"/>
+          p:driverClassName="${dataSource.driverClassName}"
+          p:url="${dataSource.url}"
+          p:username="${dataSource.username}"
+          p:password="${dataSource.password}"/>
 
     <!-- 配置Jdbc模板  -->
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
@@ -49,4 +51,17 @@
             <tx:method name="*" />
         </tx:attributes>
     </tx:advice>
+
+    <!-- redis连接池的配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"
+          p:maxTotal="${redis.maxTotal}"
+          p:maxIdle="${redis.maxIdle}"
+          p:minIdle="${redis.minIdle}"
+          p:maxWaitMillis="${redis.maxWaitMillis}"/>
+
+    <!-- redis的连接池 -->
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool"
+          c:poolConfig-ref="jedisPoolConfig"
+          c:host="${redis.host}"
+          c:port="${redis.port}"/>
 </beans>

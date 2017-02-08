@@ -9,3 +9,5 @@ CREATE TABLE springmvcdemo_db.SpringMVCDemo_User
     discount DOUBLE DEFAULT 1.0 NOT NULL,
     type INT DEFAULT 1 NOT NULL
 );
+
+INSERT INTO SpringMVCDemo_User(id, name, password) VALUES ('Colin', 'Colin', 'a');

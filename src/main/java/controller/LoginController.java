@@ -45,7 +45,13 @@ public class LoginController {
     @RequestMapping("/page/logout.json")
     @ResponseBody
     @LogAnnotation
-    public void logout(HttpServletRequest request) {
+    public String logout(HttpServletRequest request) {
+        Map<String, Object> returnMap = new LinkedHashMap<String, Object>();
+
         request.getSession().setAttribute("loginUser", null);
+        returnMap.put("respCode", "1000");
+        returnMap.put("respMsg", "注销成功");//.getBytes("UTF-8"),"iso8859-1");
+
+        return JSON.toJSONString(returnMap);
     }
 }

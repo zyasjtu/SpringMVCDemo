@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.UserService;
+import util.RSAUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
@@ -26,7 +27,9 @@ public class LoginController {
     @ResponseBody
     @LogAnnotation
     public String loginCheck(@RequestParam String inputAccount, @RequestParam String inputPassword,
-                             HttpServletRequest request) {
+                             HttpServletRequest request) throws Exception {
+        inputAccount = RSAUtil.decrypt(inputAccount, RSAUtil.PRIVATE_KEY);
+        inputPassword = RSAUtil.decrypt(inputPassword, RSAUtil.PRIVATE_KEY);
         User user = userService.findUser(inputAccount, inputPassword);
         Map<String, Object> returnMap = new LinkedHashMap<String, Object>();
         if (user.getId() == null) {

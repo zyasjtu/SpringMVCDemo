@@ -101,6 +101,12 @@
       <version>2.5.2</version>
     </dependency>
 
+    <!--httpclient-->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.1</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>SpringMVCDemo</finalName>
